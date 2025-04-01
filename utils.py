@@ -3,7 +3,7 @@ from torchvision import transforms
 from model import load_model, class_names
 from disease_solutions import disease_solutions  # Import from the new module
 
-def load_model(model_path="Upated Plant/model/model.pth"):
+def load_model(model_path="plantDisease/Updated Plant/model/model.pth"):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = torch.load(model_path, map_location=device)  # Load the model properly
     return model
