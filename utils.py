@@ -3,11 +3,8 @@ from torchvision import transforms
 from model import load_model, class_names
 from disease_solutions import disease_solutions  # Import from the new module
 
-def load_model(model_path="plantDisease/Updated Plant/model/model.pth"):
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = torch.load(model_path, map_location=device)  # Load the model properly
-    return model
-
+model = torch.load(model_path="plantDisease/Updated Plant/model/model.pth"("cpu"))
+model.eval() 
 
 # Define preprocessing transformation
 preprocess = transforms.Compose([
