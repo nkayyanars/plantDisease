@@ -4,7 +4,7 @@ from model import load_model, class_names
 from disease_solutions import disease_solutions  # Import from the new module
 
 # Load model
-model = load_model(r'')
+model = load_model('Updated Plant/model/model.pth')
 
 # Define preprocessing transformation
 preprocess = transforms.Compose([
