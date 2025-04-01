@@ -3,8 +3,8 @@ from torchvision import transforms
 from model import load_model, class_names
 from disease_solutions import disease_solutions  # Import from the new module
 
-model = torch.load(model_path="plantDisease/Updated Plant/model/model.pth"("cpu"))
-model.eval() 
+
+model = load_model(model_path="plantDisease/Updated Plant/model/model.pth")
 
 # Define preprocessing transformation
 preprocess = transforms.Compose([
