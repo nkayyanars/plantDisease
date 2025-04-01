@@ -3,7 +3,7 @@ import torchvision.transforms as transforms
 from PIL import Image
 
 # Load the model
-def load_model(model_path="plantDisease/Updated Plant/model/model.pth"):
+def load_model(model_path="Updated Plant/model/model.pth"):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = torch.load(model_path, map_location=device)
     model.eval()  # Set to evaluation mode
