@@ -1,7 +1,7 @@
 import time
 import streamlit as st
 from PIL import Image
-from utils import predict_image  # Import prediction logic
+from .utils import predict_image  # Import prediction logic
 
 # Streamlit App Configuration
 st.set_page_config(page_title="Plant Disease Detector", layout="wide")
