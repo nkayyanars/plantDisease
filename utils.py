@@ -1,40 +1,34 @@
 import torch
-import torchvision.transforms as transforms
-from PIL import Image
+from torchvision import transforms
+from model import load_model, class_names
+from disease_solutions import disease_solutions  # Import from the new module
 
-# Load the model
-def load_model(model_path="Updated Plant/model/model.pth"):
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = torch.load(model_path, map_location=device)
-    model.eval()  # Set to evaluation mode
-    return model
+# Load model
+model = load_model(r'')
 
-# Load the model globally to avoid reloading it on every prediction
-model = load_model()  # Ensure this is executed when utils.py is imported
-
-# Define the image transformation
-transform = transforms.Compose([
-    transforms.Resize((224, 224)),  # Resize to match model input
+# Define preprocessing transformation
+preprocess = transforms.Compose([
+    transforms.Resize((256, 256)),
     transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
 
-def predict_image(img):
-    global model  # Ensure model is accessible
-    img_tensor = transform(img).unsqueeze(0)  # Add batch dimension
+def predict_image(image):
+    img_tensor = preprocess(image).unsqueeze(0).to('cpu')
     with torch.no_grad():
-        predictions = model(img_tensor)  # Get model output
+        predictions = model(img_tensor)
+    predicted_class_idx = torch.argmax(predictions, dim=1).item()
+    predicted_label = class_names[predicted_class_idx]
+    probs = torch.nn.functional.softmax(predictions, dim=1)
+    predicted_prob = probs[0][predicted_class_idx].item()
 
-    # Mock result (modify based on your actual model output processing)
-    predicted_label = "Healthy"
-    predicted_prob = torch.max(predictions).item()
-    disease_solution = "No action needed"
-    disease_link = None
+    if 'healthy' in predicted_label:
+        predicted_label = "Leaf is Healthy"
+        predicted_prob = 1.0
+
+    # Get treatment solution and link
+    disease_info = disease_solutions.get(predicted_label, {"solution": "No treatment available.", "link": ""})
+    disease_solution = disease_info["solution"]
+    disease_link = disease_info["link"]
     
     return predicted_label, predicted_prob, disease_solution, disease_link
-
-
-
-    
-  
-
-
