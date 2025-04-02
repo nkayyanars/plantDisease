@@ -14,7 +14,7 @@ def prediction_page():
         st.title("🌿 Plant Disease Classification")
         st.write("Upload plant leaf images to detect diseases.")
 
-        uploaded_files = st.file_uploader("Choose images...", type=["jpg", "png"], accept_multiple_files=True)
+        uploaded_files = st.file_uploader("Choose images...", type=["jpg", "png","webp","bmp","jpeg","svg"], accept_multiple_files=True)
 
         if uploaded_files:
             for uploaded_file in uploaded_files:
